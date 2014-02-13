@@ -7,7 +7,6 @@
 	<uses-sdk android:minSdkVersion="6" android:targetSdkVersion="14" />
 	<application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true" android:hardwareAccelerated="true" android:largeHeap="true">
 		<activity android:name="HWBOTOpenGLActivity"
-		    	  android:screenOrientation="landscape"
 		    	  android:immersive="true"
 							android:label="@string/app_name"
 							android:theme="@android:style/Theme.NoTitleBar.Fullscreen"

@@ -1,6 +1,7 @@
 package org.hwbot.bench.gpu.managers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +17,10 @@ public class ShaderSeeTest extends BenchmarkState {
 
     public ShaderSeeTest(GameStateManager gsm) {
         super(gsm);
+
+        float density = Gdx.graphics.getDensity();
+        System.out.println("pixel density: " + density);
+        // Gdx.graphics.setDisplayMode(640, 360, true);
     }
 
     @Override
@@ -76,6 +81,7 @@ public class ShaderSeeTest extends BenchmarkState {
     @Override
     public void draw() {
         Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         fpsCounter.put(Gdx.graphics.getFramesPerSecond());
         // start our batch

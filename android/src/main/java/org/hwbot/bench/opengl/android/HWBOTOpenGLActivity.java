@@ -16,9 +16,18 @@ public class HWBOTOpenGLActivity extends AndroidApplication {
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         // FSAA
-        config.numSamples = 2;
+        // config.r = 8;
+        // config.g = 8;
+        // config.b = 8;
+        // config.a = 2;
+
+        /** number of bits for depth and stencil buffer **/
+        // config.depth = 16;
+        // config.stencil = 4;
+        config.numSamples = 0;
         config.useGL20 = true;
         config.resolutionStrategy = new FillResolutionStrategy();
+        // config.resolutionStrategy = new FixedResolutionStrategy(800, 480);
         // 800, 480
         initialize(new HWBOTOpenGL(), config);
 

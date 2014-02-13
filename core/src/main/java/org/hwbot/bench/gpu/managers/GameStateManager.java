@@ -1,6 +1,5 @@
 package org.hwbot.bench.gpu.managers;
 
-import java.nio.channels.SeekableByteChannel;
 import java.util.concurrent.TimeUnit;
 
 import com.badlogic.gdx.Gdx;

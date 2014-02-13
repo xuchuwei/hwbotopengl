@@ -8,7 +8,7 @@
 precision highp float;
 #endif
 
-const bool USE_MOUSE = true; // Set this to true for God Mode :)
+const bool USE_MOUSE = false; // Set this to true for God Mode :)
 
 uniform float time;
 uniform vec2 mouse;
@@ -153,7 +153,8 @@ void main( void ) {
 	vec3 ray_dir = normalize(vec3(position,0) - ray_start);
 	ray_start.y = cos(time * 0.5) * 0.2 - 0.25 + sin(time * 2.0) * 0.05;
 	
-	const float dayspeed = 0.04;
+    // normal speed = 0.04
+	const float dayspeed = 0.08;
 	float subtime = max(-0.16, sin(time * dayspeed) * 0.2);
 	float middayperc = USE_MOUSE ? mouse.y * 0.3 - 0.15 : max(0.0, sin(subtime));
 	vec3 light1_pos = vec3(0.0, middayperc * 200.0, USE_MOUSE ? 200.0 : cos(subtime * dayspeed) * 200.0);

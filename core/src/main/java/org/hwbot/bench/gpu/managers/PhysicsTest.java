@@ -300,14 +300,18 @@ public class PhysicsTest extends BenchmarkState implements InputProcessor, Gestu
             }
 
             long renderTime = System.currentTimeMillis() - startRenderTime;
-            if (!shot1Fired && renderTime > TimeUnit.SECONDS.toMillis(1)) {
+            if (!shot1Fired && renderTime > TimeUnit.SECONDS.toMillis(2)) {
                 // shoot(655, 337);
-                for (int i = 0; i < targets.size(); i++) {
+                int targetsize = targets.size();
+                for (int i = 0; i < targetsize; i++) {
                     shoot();
                 }
                 shot1Fired = true;
             }
-            if (!shot2Fired && renderTime > TimeUnit.SECONDS.toMillis(5)) {
+            if (!shot2Fired && renderTime > TimeUnit.SECONDS.toMillis(4)) {
+                for (int i = 0; i < targets.size(); i++) {
+                    shoot();
+                }
                 shot2Fired = true;
             }
             if (!shot3Fired && renderTime > TimeUnit.SECONDS.toMillis(8)) {
