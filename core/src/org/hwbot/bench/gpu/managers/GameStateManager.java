@@ -7,11 +7,15 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-//import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameStateManager {
 
@@ -74,10 +78,15 @@ public class GameStateManager {
     }
 
     public void nextState() {
+        if (gameState.getState() != EndState.STATE) {
+            setState(gameState.getState() + 1);
+            return;
+        }
+
         if ((gameState.getState() == OpenGLTest.STATE)) {
             setState(ShaderSeeTest.STATE);
         } else if ((gameState.getState() == ShaderSeeTest.STATE)) {
-            //setState(PhysicsTest.STATE);
+            setState(PhysicsTest.STATE);
         } else if (gameState.getState() != EndState.STATE) {
             setState(gameState.getState() + 1);
         }
@@ -93,14 +102,16 @@ public class GameStateManager {
 
         font = new BitmapFont();
         // font.setScale(0.5f);
-        hud = new Stage(/*480, 320, true*/);
+        // hud = new Stage(480, 320, true);
+        //hud = new Stage(new ScalingViewport(Scaling.stretch, 320, 480), new SpriteBatch());
+        hud = new Stage();
         hud.addActor(fpsLabel = new Label(" ", new Label.LabelStyle(font, Color.WHITE)));
         fpsLabel.setPosition(0, 0);
         hud.addActor(titleLabel = new Label(gameState.getClass().getSimpleName(), new Label.LabelStyle(font, Color.WHITE)));
         titleLabel.setY(hud.getHeight() - titleLabel.getHeight());
         hud.addActor(instructLabel = new Label("A\nB\nC\nD\nE\nF", new Label.LabelStyle(font, Color.WHITE)));
         instructLabel.setY(titleLabel.getY() - instructLabel.getHeight());
-        //instructLabel.setAlignment(Align.top | Align.left);
+        instructLabel.setAlignment(Align.top | Align.left);
         instructLabel.setText(gameState.instructions);
     }
 

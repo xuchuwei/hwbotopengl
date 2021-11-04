@@ -22,13 +22,14 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-//import com.badlogic.gdx.physics.bullet.dynamics.btRigidBodyConstructionInfo;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody.btRigidBodyConstructionInfo;
 
 /** @author xoppa
  *  Holds the information necessary to create a bullet btRigidBody. This class should outlive the btRigidBody (entity) itself.
  */
 public class BulletConstructor extends BaseWorld.Constructor<BulletEntity> {
-	//public btRigidBodyConstructionInfo bodyInfo = null;
+	public btRigidBodyConstructionInfo bodyInfo = null;
 	public btCollisionShape shape = null;
 		
 	/**
@@ -65,8 +66,9 @@ public class BulletConstructor extends BaseWorld.Constructor<BulletEntity> {
 	public BulletConstructor (final Model model, final float mass) {
 		final BoundingBox boundingBox = new BoundingBox(); 
 		model.calculateBoundingBox(boundingBox);
-		//final Vector3 dimensions = boundingBox.getDimensions();
-		//create(model, mass, dimensions.x, dimensions.y, dimensions.z);
+		final Vector3 dimensions = new Vector3();
+		boundingBox.getDimensions(dimensions);
+		create(model, mass, dimensions.x, dimensions.y, dimensions.z);
 	}
 	
 	/**
@@ -78,7 +80,7 @@ public class BulletConstructor extends BaseWorld.Constructor<BulletEntity> {
 	
 	private void create (final Model model, final float mass, final float width, final float height, final float depth) {			
 		// Create a simple boxshape
-		//create(model, mass, new btBoxShape(Vector3.tmp.set(width * 0.5f, height * 0.5f, depth * 0.5f)));
+		create(model, mass, new btBoxShape(Vector3.Zero.set(width * 0.5f, height * 0.5f, depth * 0.5f)));
 	}
 	
 	private void create(final Model model, final float mass, final btCollisionShape shape) {
@@ -91,44 +93,42 @@ public class BulletConstructor extends BaseWorld.Constructor<BulletEntity> {
 			if (mass == 0)
 				localInertia = Vector3.Zero;
 			else {
-				//shape.calculateLocalInertia(mass, Vector3.tmp);
-				//localInertia = Vector3.tmp;
+				shape.calculateLocalInertia(mass, Vector3.Zero);
+				localInertia = Vector3.Zero;
 			}
 			
 			// For now just pass null as the motionstate, we'll add that to the body in the entity itself
-			//bodyInfo = new btRigidBodyConstructionInfo(mass, null, shape, localInertia);
+			bodyInfo = new btRigidBodyConstructionInfo(mass, null, shape, localInertia);
 		}
 	}
 
 	@Override
 	public void dispose () {
 		// Don't rely on the GC
-		//if (bodyInfo != null) bodyInfo.dispose();
+		if (bodyInfo != null) bodyInfo.dispose();
 		if (shape != null) shape.dispose();
 		// Remove references so the GC can do it's work
-		//bodyInfo = null;
+		bodyInfo = null;
 		shape = null;
 	}
 
 	@Override
 	public BulletEntity construct (float x, float y, float z) {
-		if (/*bodyInfo == null && */shape != null) {
+		if (bodyInfo == null && shape != null) {
 			btCollisionObject obj = new btCollisionObject();
 			obj.setCollisionShape(shape);
 			return new BulletEntity(model, obj, x, y, z);
 		} else
-			//return new BulletEntity(model, bodyInfo, x, y, z);
-			return new BulletEntity(model, null, x, y, z);
+			return new BulletEntity(model, bodyInfo, x, y, z);
 	}
 	
 	@Override
 	public BulletEntity construct (final Matrix4 transform) {
-		if (/*bodyInfo == null && */shape != null) {
+		if (bodyInfo == null && shape != null) {
 			btCollisionObject obj = new btCollisionObject();
 			obj.setCollisionShape(shape);
 			return new BulletEntity(model, obj, transform);
 		} else
-		//return new BulletEntity(model, bodyInfo, transform);
-			return new BulletEntity(model, null, transform);
+			return new BulletEntity(model, bodyInfo, transform);
 	}
 }

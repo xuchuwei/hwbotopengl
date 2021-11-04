@@ -117,8 +117,8 @@ public abstract class BenchmarkState extends GameState {
         return false;
     }
 
-    //@Override
-    public boolean scrolled(int amount) {
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
         return false;
     }
 

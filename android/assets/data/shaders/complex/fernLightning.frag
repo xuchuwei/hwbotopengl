@@ -46,16 +46,19 @@ float scircle(vec2 p, vec2 o, float r) {
 
 
 
-vec2 l_pos = vec2(mouse.x, mouse.y*resolution.y/resolution.x);
+//vec2 l_pos = vec2(mouse.x, mouse.y*resolution.y/resolution.x);
 
-vec2 c_pos = vec2(0.5,0.5*resolution.y/resolution.x);// + vec2(sin(time), cos(time))*0.1;
+//vec2 c_pos = vec2(0.5,0.5*resolution.y/resolution.x);// + vec2(sin(time), cos(time))*0.1;
 
-vec2 s_pos = vec2(0.5,0.5*resolution.y/resolution.x);
+//vec2 s_pos = vec2(0.5,0.5*resolution.y/resolution.x);
 
 
 
 // use distance functions!
 float scene(vec2 p) {
+    vec2 c_pos = vec2(0.5,0.5*resolution.y/resolution.x);// + vec2(sin(time), cos(time))*0.1;
+    vec2 s_pos = vec2(0.5,0.5*resolution.y/resolution.x);
+
     float d1 = scircle(p, c_pos, 0.04);
     float d2 = box(p, vec2(0.2, 0.2), vec2(0.2, 0.04));
     float d3 = ucircle(p, s_pos, 0.5);
@@ -81,6 +84,8 @@ vec2 sceneNormal(vec2 p) {
 
 // get light from light source if within sample cone
 float getLight(vec2 p ,vec2 v, float t, float ts) {
+    vec2 l_pos = vec2(mouse.x, mouse.y*resolution.y/resolution.x);
+
     float d = length(l_pos-p);
     float a = acos(dot(v, (l_pos-p)/d));
     if(d < t && a < DA*0.5) {

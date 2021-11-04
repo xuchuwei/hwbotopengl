@@ -20,8 +20,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
-//import com.badlogic.gdx.physics.bullet.dynamics.btRigidBodyConstructionInfo;
-
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody.btRigidBodyConstructionInfo;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 
 /** @author xoppa
@@ -31,7 +30,7 @@ public class BulletEntity extends BaseEntity {
 	private final static Matrix4 tmpM = new Matrix4();
 	public BulletEntity.MotionState motionState;
 	public btCollisionObject body;
-/*
+
 	public BulletEntity (final Model model, final btRigidBodyConstructionInfo bodyInfo, final float x, final float y, final float z) {
 		this(model, bodyInfo == null ? null : new btRigidBody(bodyInfo), x, y, z);
 	}
@@ -39,7 +38,7 @@ public class BulletEntity extends BaseEntity {
 	public BulletEntity (final Model model, final btRigidBodyConstructionInfo bodyInfo, final Matrix4 transform) {
 		this(model, bodyInfo == null ? null : new btRigidBody(bodyInfo), transform);
 	}
-	*/
+	
 	public BulletEntity (final Model model, final btCollisionObject body, final float x, final float y, final float z) {
 		this(model, body, tmpM.setToTranslation(x, y, z));
 	}

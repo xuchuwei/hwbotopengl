@@ -21,27 +21,29 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.physics.bullet.linearmath.btVector3;
 
+import com.badlogic.gdx.math.Vector3;
+
 /** @author xoppa */
 public class DebugDrawer extends btIDebugDraw {
 	public int debugMode = 0;
 	public ShapeRenderer lineRenderer = new ShapeRenderer();
 
-	//@Override
-	public void drawLine (btVector3 from, btVector3 to, btVector3 color) {
-		lineRenderer.setColor(color.getX(), color.getY(), color.getZ(), 1f);
-		lineRenderer.line(from.getX(), from.getY(), from.getZ(), to.getX(), to.getY(), to.getZ());
+	@Override
+	public void drawLine (Vector3 from, Vector3 to, Vector3 color) {
+		lineRenderer.setColor(color.x, color.y, color.z, 1f);
+		lineRenderer.line(from.x, from.y, from.z, to.x, to.y, to.z);
 	}
 
-	//@Override
-	public void drawContactPoint (btVector3 PointOnB, btVector3 normalOnB, float distance, int lifeTime, btVector3 color) {
+	@Override
+	public void drawContactPoint (Vector3 PointOnB, Vector3 normalOnB, float distance, int lifeTime, Vector3 color) {
 	}
 
 	@Override
 	public void reportErrorWarning (String warningString) {
 	}
 	
-	//@Override
-	public void draw3dText (btVector3 location, String textString) {
+	@Override
+	public void draw3dText (Vector3 location, String textString) {
 	}
 	
 	@Override
